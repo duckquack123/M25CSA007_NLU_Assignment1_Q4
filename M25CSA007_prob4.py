@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 # ytr = data.target
 # kept getting timeout error so switched to AG News csv
 
-# tr_f = "bbc_data/bbc/politics"
-# te_f = "bbc_data/bbc/sport"
+# tr_f = "news/politics"
+# te_f = "news/sport"
 # scores were all 1.0 so it was overfitting or too easy
 
 # for fname in os.listdir("bbc_data/bbc/politics"):
@@ -25,8 +25,8 @@ import matplotlib.pyplot as plt
 #         xtr.append(f.read())
 #         ytr.append(0)
 
-tr_f = "train.csv"
-te_f = "test.csv"
+tr_f = "train.csv"  # AG News training
+te_f = "test.csv"  # AG News testing
 
 if not os.path.exists(tr_f):           
     print("train.csv not found")
@@ -43,21 +43,22 @@ if not os.path.exists(tr_f):
 # df = df[df['class'].isin([1,2])]   # filter politics and sports
 # this worked but wanted to keep it simple with csv module
 
-def load_ag_news(path):
+# reading the csv row by row and only keeping class 1 (politics) and class 2 (sports)
+def load_ag_news(path):  # load and filter
     x, y = [], []
     with open(path, 'r', encoding='utf-8') as f:  
         r = csv.reader(f)
         for row in r:
-            if len(row) < 3: continue
+            if len(row) < 3: continue  # skip bad rows
             c = int(row[0])
             # combine title and description
             # txt = row[1]
-            txt = row[1] + " " + row[2]  
+            txt = row[1] + " " + row[2]  # title + desc
             
-            if c == 1:
+            if c == 1:  # politics/world
                 x.append(txt)
                 y.append(0)
-            elif c == 2: 
+            elif c == 2:  # sports
                 x.append(txt)
                 y.append(1)
             # elif c == 3:
@@ -65,13 +66,13 @@ def load_ag_news(path):
             #     y.append(2)   # business
     return np.array(x), np.array(y)
 
-xtr, ytr = load_ag_news(tr_f)
-xte, yte = load_ag_news(te_f)
+xtr, ytr = load_ag_news(tr_f)  # load train
+xte, yte = load_ag_news(te_f)  # load test
 
 print("Train:", len(xtr))
 print("Test:", len(xte))
 
-tn = ['Politics', 'Sports']
+tn = ['Politics', 'Sports']  # target names
 
 # vec = CountVectorizer()
 # xtr_vec = vec.fit_transform(xtr)
@@ -80,8 +81,9 @@ tn = ['Politics', 'Sports']
 # clf.fit(xtr_vec, ytr)
 # p1 = clf.predict(xte_vec)   
 
+# training three different models — each pipeline handles vectorization + classification together
 print("\nNB (BoW):")
-m1 = make_pipeline(CountVectorizer(), MultinomialNB())  
+m1 = make_pipeline(CountVectorizer(), MultinomialNB())  # bag of words
 m1.fit(xtr, ytr)
 p1 = m1.predict(xte)
 a1 = accuracy_score(yte, p1)
@@ -89,7 +91,7 @@ print(f"Acc: {a1:.4f}")
 print(classification_report(yte, p1, target_names=tn))
 
 print("\nSVM (TFIDF):")
-m2 = make_pipeline(TfidfVectorizer(), LinearSVC(dual='auto'))
+m2 = make_pipeline(TfidfVectorizer(), LinearSVC(dual='auto'))  # tfidf features
 m2.fit(xtr, ytr)
 p2 = m2.predict(xte)
 a2 = accuracy_score(yte, p2)
@@ -98,17 +100,17 @@ print(classification_report(yte, p2, target_names=tn))
 
 print("\nLR (TFIDF):")
 # m3 = make_pipeline(TfidfVectorizer(), LogisticRegression(max_iter=100)) #convergence problem  i odnt know why
-m3 = make_pipeline(TfidfVectorizer(), LogisticRegression())
+m3 = make_pipeline(TfidfVectorizer(), LogisticRegression())  # default params
 m3.fit(xtr, ytr)
 p3 = m3.predict(xte)
 a3 = accuracy_score(yte, p3)
 print(f"Acc: {a3:.4f}")
 print(classification_report(yte, p3, target_names=tn))
 
-accs = [a1, a2, a3]
+accs = [a1, a2, a3]  # collect accuracies
 names = ['NB', 'SVM', 'LR']
 plt.figure(figsize=(6, 4))
 plt.bar(names, accs, color=['blue', 'green', 'red'])
 plt.ylim(0.9, 1.0)
 plt.title('Accuracy Comparison')
-plt.savefig('model_comparison.png')
+plt.savefig('model_comparison.png')  # save plot
