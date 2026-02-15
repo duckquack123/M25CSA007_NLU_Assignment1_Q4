@@ -35,9 +35,10 @@ We use the [AG News](http://groups.di.unipi.it/~gulli/AG_corpus_of_news_articles
 | File | Description |
 |:---|:---|
 | `M25CSA007_prob4.py` | Main classification script |
-| `M25CSA007_prob4_report.md` | Detailed report (5+ pages) |
 | `model_comparison.png` | Bar chart comparing model accuracies |
 | `docs/index.html` | GitHub Pages site |
+
+> **Note:** The detailed report `M25CSA007_prob4_report.md` has been removed from this repository as per requirements, but is available upon request or in the local submission package.
 
 ## How to Run
 
@@ -57,7 +58,8 @@ The script prints accuracy and detailed classification reports (precision, recal
 
 ## GitHub Pages
 
-The project page is hosted at: `https://<username>.github.io/<repo-name>/`
+The project page is hosted at:  
+**[https://duckquack123.github.io/M25CSA007_NLU_Assignment1_Q4/](https://duckquack123.github.io/M25CSA007_NLU_Assignment1_Q4/)**
 
 ---
 *M25CSA007 — IIT Jodhpur, Semester 2*
