@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports vs Politics Classifier | M25CSA007</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: white;
+            padding: 3rem 0;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Sports vs Politics Classifier</h1>
+            <div class="subtitle">NLU Assignment 1 • Problem 4 • M25CSA007</div>
+            <p style="margin-top: 1.5rem;">
+                <a href="https://github.com/duckquack123/M25CSA007_NLU_Assignment1_Q4" class="btn">View on GitHub</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>About the Project</h2>
+            <p>This project implements a binary text classifier to distinguish between <strong>Sports</strong> and
+                <strong>Politics</strong> news articles. Using a dataset of over 60,000 articles, we trained and
+                evaluated three different machine learning models to determine the most effective approach for this
+                natural language processing task.</p>
+        </div>
+
+        <div class="card">
+            <h2>Model Performance Comparison</h2>
+            <p>We compared three models: <strong>Naive Bayes</strong> (using Bag of Words), <strong>Linear SVM</strong>
+                (using TF-IDF), and <strong>Logistic Regression</strong> (using TF-IDF). All models performed
+                exceptionally well, achieving over 97% accuracy.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Feature Representation</th>
+                        <th>Accuracy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Multinomial Naive Bayes</td>
+                        <td>Bag of Words (CountVectorizer)</td>
+                        <td>97.45%</td>
+                    </tr>
+                    <tr>
+                        <td>Linear SVM</td>
+                        <td>TF-IDF</td>
+                        <td>97.55%</td>
+                    </tr>
+                    <tr>
+                        <td>Logistic Regression</td>
+                        <td>TF-IDF</td>
+                        <td><span class="highlight">97.61%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Visual Comparison</h3>
+            <p>The chart below shows the accuracy comparison across the three models:</p>
+            <img src="../model_comparison.png" alt="Model Accuracy Comparison Chart">
+        </div>
+
+        <div class="card">
+            <h2>Methodology</h2>
+            <h3>1. Data Collection</h3>
+            <p>We utilized the <strong>AG News Dataset</strong>, extracting Class 1 (World/Politics) and Class 2
+                (Sports). The dataset was balanced with 30,000 training samples and 1,900 test samples per class.</p>
+
+            <h3>2. Preprocessing</h3>
+            <p>Text data was cleaned, and we concatenated the "Title" and "Description" fields to provide richer context
+                for classification.</p>
+
+            <h3>3. Training</h3>
+            <p>We used <code>scikit-learn</code> pipelines to streamline the vectorization and training process. 5-fold
+                cross-validation was used during development to ensure robustness.</p>
+        </div>
+
+        <div class="card">
+            <h2>Conclusion</h2>
+            <p>The project demonstrates that for distinct topics like Sports and Politics, linear models with simple
+                feature representations (TF-IDF) are highly effective. <strong>Logistic Regression</strong> proved to be
+                the best performing model, offering a perfect balance of accuracy and interpretability.</p>
+            <p>For full details, please refer to the <a href="../M25CSA007_prob4_report.md">Detailed Report</a>.</p>
+        </div>
+
+        <footer style="text-align: center; color: #64748b; margin-top: 3rem;">
+            <p>Generated for NLU Assignment 1 by M25CSA007</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
